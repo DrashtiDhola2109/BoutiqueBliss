@@ -30,6 +30,8 @@ import org.primefaces.PrimeFaces;
 @RequestScoped
 public class AdminCDI {
 
+    String username;
+    
     Category c;
     Collection<Category> cats;
     GenericType<Collection<Category>> gcats;
@@ -59,6 +61,20 @@ public class AdminCDI {
         c = new Category();
         size = new Sizemaster();
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    public String getUsername() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        username = (String) externalContext.getSessionMap().get("username");
+        return username;
+    }
+
+    
+    
+    
 
     public String getMessage() {
         return message;

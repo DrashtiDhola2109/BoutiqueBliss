@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.jms.Session;
 import javax.security.enterprise.AuthenticationStatus;
 import static javax.security.enterprise.AuthenticationStatus.SEND_CONTINUE;
 import static javax.security.enterprise.AuthenticationStatus.SEND_FAILURE;
@@ -20,6 +21,7 @@ import javax.security.enterprise.credential.Password;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import record.KeepRecord;
 
 
@@ -100,6 +102,8 @@ public class LoginBean {
 
         if (status.equals(SUCCESS)) {
             error = "";
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
             if (roles.contains("admin")) {
                 return "/admin/adminindex.jsf?faces-redirect=true";
             } else if (roles.contains("customer")) {
